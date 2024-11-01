@@ -30,11 +30,16 @@ const main = async () => {
       content: "This is the content of the blog post.",
       author: { connect: { id: 2 } },
       postcategory: {
-        create: {
-          categoryId: 3,
-          // category:
-          //      { connect: { id: 1 } }
-        },
+        // create: {
+        //   categoryId: 3,
+        //   // category:
+        //   //      { connect: { id: 1 } }
+        // },
+        create: [
+          { category: { connect: { id: 1 } } },
+          { category: { connect: { id: 3 } } },
+          { category: { connect: { id: 2 } } },
+        ],
       },
     },
     include: {
