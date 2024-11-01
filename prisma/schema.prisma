@@ -16,18 +16,73 @@ datasource db {
 
 
 
+// model post {
+//   id   Int  @id @default(autoincrement())
+//   title String
+//   content String
+//   published Boolean @default(false)
+//   author String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   @@map("posts")
+// }
+
+
 model post {
-  id   Int  @id @default(autoincrement())
-  title String
-  content String
-  published Boolean @default(false)
-  author String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  title      String
+  content    String
+  published  Boolean  @default(false)
+  authorId   Int
+  author     user     @relation(fields: [authorId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  postcategory postcategory[]
 
   @@map("posts")
 }
 
+model user {
+  id       Int       @id @default(autoincrement())
+  username String
+  email    String
+  role     userenum @default(user)
+  profile  profile?
+  posts    post[]
+
+  @@map("users")
+}
 
 
+model profile {
+  id     Int    @id @default(autoincrement())
+  bio    String?
+  userId Int    @unique
+  user   user   @relation(fields: [userId], references: [id])
 
+  @@map("profiles")
+}
+
+model category{
+  id Int @id @default(autoincrement())
+  name String
+  postcategory postcategory[]
+
+  @@map("categorys")
+}
+
+model postcategory{
+  postId Int
+  post post @relation(fields: [postId] , references: [id])
+  categoryId Int
+  category category @relation(fields: [categoryId] , references: [id])
+
+  @@id([postId , categoryId])
+  @@map("post_categories")
+}
+
+enum userenum {
+  user
+  admin
+}
