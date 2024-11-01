@@ -14,16 +14,28 @@ const queries = async () => {
   //   console.log(result);
 
   // fluent api
-  const results = await prisma.user.findUnique({
-    where: {
-      id: 2,
-    },
 
+  //   const results = await prisma.user.findUnique({
+  //     where: {
+  //       id: 2,
+  //     },
+
+  //     include: {
+  //       posts: true,
+  //     },
+  //   });
+  //   console.log(results);
+
+  const publishedPostUser = await prisma.user.findMany({
     include: {
-      posts: true,
+      posts: {
+        where: {
+          published: true,
+        },
+      },
     },
   });
-  console.log(results);
+  console.dir(publishedPostUser, { depth: Infinity });
 };
 
 queries();
