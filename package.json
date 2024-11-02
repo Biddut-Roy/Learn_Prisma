@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only -- src/index.ts",
-    "check": "ts-node-dev --respawn --transpile-only -- src/working/Aggregation.ts",
+    "check": "ts-node-dev --respawn --transpile-only -- src/working/GroupBy.ts",
     "migrate": "npx prisma migrate dev",
     "studio": "npx prisma studio"
   },
